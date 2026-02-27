@@ -19,7 +19,32 @@
   <body>
     <header class="site-header" id="top">
       <div class="container nav-wrap">
-        <a class="brand" href="#top">TECHZICK</a>
+        <a class="brand" href="#top" aria-label="Techzick Home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="img" focusable="false">
+              <defs>
+                <linearGradient id="tzGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0ea5e9" />
+                  <stop offset="100%" stop-color="#2563eb" />
+                </linearGradient>
+                <linearGradient id="tzCore" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8" />
+                  <stop offset="100%" stop-color="#1d4ed8" />
+                </linearGradient>
+              </defs>
+              <rect x="8" y="8" width="48" height="48" rx="14" fill="#0a1222" />
+              <rect x="12" y="12" width="40" height="40" rx="12" fill="none" stroke="url(#tzGrad)" stroke-width="2.5" />
+              <path d="M16 32c0-8.8 7.2-16 16-16s16 7.2 16 16-7.2 16-16 16" fill="none" stroke="#203457" stroke-width="2" />
+              <path d="M32 18v28M18 32h28" stroke="#1f3355" stroke-width="1.4" />
+              <circle cx="32" cy="32" r="7" fill="url(#tzCore)" />
+              <circle cx="32" cy="18" r="2.6" fill="#38bdf8" />
+              <circle cx="46" cy="32" r="2.6" fill="#22d3ee" />
+              <circle cx="32" cy="46" r="2.6" fill="#60a5fa" />
+              <path d="M32 25.2v13.6M25.2 32h13.6" stroke="#e2f3ff" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span class="brand-word">TECHZICK</span>
+        </a>
         <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
         <nav id="nav" class="nav-links" aria-label="Main">
           <a href="#portfolio">Portfolio</a>
