@@ -46,16 +46,17 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(1.6rem, 3.4vw, 2.5rem);
+  font-size: clamp(2rem, 3.8vw, 3rem);
 }
 
 h3 {
-  font-size: clamp(1.04rem, 1.8vw, 1.24rem);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
 }
 
 p {
   margin: 0 0 14px;
   color: var(--muted);
+  font-size: 1.02rem;
 }
 
 a {
@@ -69,14 +70,14 @@ a {
 }
 
 .section {
-  padding: 86px 0;
+  padding: 96px 0;
 }
 
 .eyebrow {
   display: inline-block;
   margin-bottom: 12px;
   color: var(--accent);
-  font-size: 0.76rem;
+  font-size: 0.84rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -205,7 +206,8 @@ textarea:focus-visible {
 
 .lead {
   max-width: 62ch;
-  font-size: 1.08rem;
+  font-size: 1.18rem;
+  color: #345071;
 }
 
 .hero-cta {
@@ -218,6 +220,21 @@ textarea:focus-visible {
 .hero-panel {
   display: grid;
   gap: 12px;
+}
+
+.hero-visual {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.hero-visual img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
 }
 
 .hero-panel article {
@@ -250,7 +267,15 @@ textarea:focus-visible {
   border-radius: var(--radius);
   background: linear-gradient(180deg, #ffffff, #f9fbff);
   box-shadow: var(--shadow);
-  padding: 22px;
+  padding: 26px;
+}
+
+.card h3,
+.steps h3,
+.suite-grid h3,
+.partners-grid h3 {
+  color: #102541;
+  margin-bottom: 10px;
 }
 
 .card ul {
@@ -262,8 +287,9 @@ textarea:focus-visible {
 .card li {
   position: relative;
   padding-left: 18px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: #374154;
+  font-size: 1rem;
 }
 
 .card li::before {
@@ -297,8 +323,9 @@ textarea:focus-visible {
 .steps article {
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 16px;
+  padding: 20px;
   background: rgba(255, 255, 255, 0.74);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
 }
 
 .suite-grid {
@@ -311,12 +338,67 @@ textarea:focus-visible {
 .suite-grid article {
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 18px;
+  padding: 20px;
   background: var(--surface);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+}
+
+.showcase-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.showcase-grid figure {
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+}
+
+.showcase-grid img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
 }
 
 .trust-strip {
   padding-top: 20px;
+}
+
+.partners-grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.partners-grid article {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  background: linear-gradient(180deg, #ffffff, #f2f8ff);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+}
+
+.partner-tags {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.partner-tags span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #234977;
+  background: #ffffff;
 }
 
 .logos {
@@ -328,6 +410,8 @@ textarea:focus-visible {
 
 .logos p {
   margin: 0 0 14px;
+  font-size: 1rem;
+  color: #2f4e73;
 }
 
 .logos div {
@@ -338,12 +422,13 @@ textarea:focus-visible {
 
 .logos span {
   text-align: center;
-  font-size: 0.78rem;
+  font-size: 0.9rem;
+  font-weight: 700;
   letter-spacing: 0.06em;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: #fff;
-  padding: 8px;
+  padding: 10px 8px;
 }
 
 .contact-section {
@@ -440,11 +525,15 @@ textarea:focus {
   .suite-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .showcase-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 760px) {
   .section {
-    padding: 64px 0;
+    padding: 72px 0;
   }
 
   .menu-btn {
@@ -484,6 +573,8 @@ textarea:focus {
 
   .portfolio-grid,
   .suite-grid,
+  .showcase-grid,
+  .partners-grid,
   .logos div {
     grid-template-columns: 1fr;
   }
