@@ -819,6 +819,167 @@ ul { list-style: none; }
 .footer-tag { opacity: 0.5; }
 
 /* ============================================================
+   BLOG SECTION
+   ============================================================ */
+.blog-section {
+  background: var(--bg-surface);
+  position: relative;
+  overflow: hidden;
+}
+.blog-section::before {
+  content: '';
+  position: absolute;
+  top: -180px; left: -180px;
+  width: 560px; height: 560px;
+  background: radial-gradient(circle, rgba(0,212,255,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.blog-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.blog-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--cyan-dim) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+.blog-card:hover {
+  background: var(--bg-card2);
+  border-color: var(--border);
+  transform: translateY(-4px);
+}
+.blog-card:hover::before { opacity: 1; }
+
+.blog-card--featured {
+  background: linear-gradient(135deg, #0A1628 0%, #110B2E 100%);
+  border-color: rgba(124,58,237,0.2);
+}
+.blog-card--featured::before {
+  background: linear-gradient(135deg, var(--purple-dim) 0%, transparent 60%);
+}
+.blog-card--featured:hover { border-color: rgba(124,58,237,0.45); }
+
+.blog-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.blog-category {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  border: 1px solid rgba(0,212,255,0.2);
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+.blog-category--purple {
+  color: #9F67FF;
+  background: var(--purple-dim);
+  border-color: rgba(124,58,237,0.3);
+}
+.blog-date {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.blog-breaking-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  color: #FF5F57;
+  margin-top: -4px;
+}
+.blog-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.blog-excerpt {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  flex: 1;
+}
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.blog-tag {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-dim);
+  color: var(--text-dim);
+  transition: all var(--transition);
+}
+.blog-tag:hover { border-color: var(--cyan); color: var(--cyan); }
+.blog-tag--purple { border-color: rgba(124,58,237,0.25); color: #9F67FF; background: var(--purple-dim); }
+.blog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-dim);
+  margin-top: auto;
+}
+.blog-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.author-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+.author-dot--purple {
+  background: var(--purple);
+  box-shadow: 0 0 6px var(--purple-glow);
+}
+.card-link--purple {
+  color: #9F67FF !important;
+}
+.blog-cta-wrap {
+  text-align: center;
+}
+
+/* ============================================================
    SCROLL REVEAL ANIMATIONS
    ============================================================ */
 .reveal {
@@ -868,6 +1029,7 @@ ul { list-style: none; }
   .footer-inner { grid-template-columns: 1fr; gap: 40px; padding: 48px 24px; }
   .footer-links { grid-template-columns: repeat(2, 1fr); }
   .footer-bottom .container { flex-direction: column; gap: 8px; text-align: center; }
+  .blog-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {

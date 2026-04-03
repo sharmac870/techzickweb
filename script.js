@@ -205,7 +205,7 @@ function animateCounter(el, target, duration) {
 
   // Auto-add reveal class to section elements
   const autoReveal = document.querySelectorAll(
-    '.service-card, .grc-step, .differentiator, .tech-cat, .contact-item'
+    '.service-card, .grc-step, .differentiator, .tech-cat, .contact-item, .blog-card'
   );
   autoReveal.forEach((el, i) => {
     el.classList.add('reveal');
