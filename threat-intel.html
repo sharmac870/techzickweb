@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Techzick AI Sentinel — Global Cyber Attack Tracker. Rolling 6-month register of major ransomware, zero-days, nation-state operations, and AI security incidents." />
+  <title>Global Cyber Attack Tracker — Last 6 Months | Techzick AI Sentinel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Threat Intel Page ── */
+    .ti-hero {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-dim);
+      padding: 48px 0 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ti-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 100% at 0% 50%, rgba(0,212,255,0.05) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 100% at 100% 50%, rgba(124,58,237,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .ti-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+    .ti-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .ti-back:hover { color: var(--cyan); }
+    .ti-back svg { width: 16px; height: 16px; }
+
+    .ti-hero-content { text-align: center; max-width: 720px; margin: 0 auto; }
+    .ti-hero-content .eyebrow { color: var(--cyan); }
+    .ti-hero-content h1 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin: 12px 0 16px; }
+    .ti-hero-content p { font-size: 1rem; color: var(--text-muted); }
+
+    .ti-stats-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-top: 36px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius);
+      padding: 20px 32px;
+    }
+    .ti-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 0 32px;
+      text-align: center;
+    }
+    .ti-stat + .ti-stat {
+      border-left: 1px solid var(--border-dim);
+    }
+    .ti-stat-num {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .ti-stat-num.red    { color: #EF4444; }
+    .ti-stat-num.orange { color: #F97316; }
+    .ti-stat-num.cyan   { color: var(--cyan); }
+    .ti-stat-num.purple { color: var(--purple); }
+    .ti-stat-label { font-size: 0.78rem; color: var(--text-dim); }
+
+    /* Filter bar */
+    .ti-filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 24px 0 32px;
+    }
+    .ti-filter-label { font-size: 0.8rem; color: var(--text-dim); margin-right: 4px; }
+    .ti-filter-btn {
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-family: var(--mono);
+      border: 1px solid var(--border-dim);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .ti-filter-btn:hover,
+    .ti-filter-btn.active {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-dim);
+    }
+    .ti-filter-btn[data-type="Ransomware"].active   { border-color:#EF4444; color:#EF4444; background:rgba(239,68,68,0.08); }
+    .ti-filter-btn[data-type="Zero-Day"].active     { border-color:#F97316; color:#F97316; background:rgba(249,115,22,0.08); }
+    .ti-filter-btn[data-type="Nation-State"].active { border-color:var(--purple); color:var(--purple); background:var(--purple-dim); }
+    .ti-filter-btn[data-type="Data Breach"].active  { border-color:#EAB308; color:#EAB308; background:rgba(234,179,8,0.08); }
+    .ti-filter-btn[data-type="AI/LLM Attack"].active{ border-color:#10B981; color:#10B981; background:rgba(16,185,129,0.08); }
+    .ti-filter-btn[data-type="Supply Chain"].active { border-color:#8B5CF6; color:#8B5CF6; background:rgba(139,92,246,0.08); }
+    .ti-filter-btn[data-type="Compliance"].active   { border-color:#64748B; color:#94A3B8; background:rgba(100,116,139,0.08); }
+
+    /* Attack cards grid */
+    .ti-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .attack-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 24px;
+      align-items: start;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .attack-card:hover {
+      border-color: rgba(0,212,255,0.2);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .attack-card.hidden { display: none; }
+
+    .attack-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+    }
+    .attack-date {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+    .severity-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      width: fit-content;
+    }
+    .severity-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .severity-badge.CRITICAL { background:rgba(239,68,68,0.12); color:#EF4444; border:1px solid rgba(239,68,68,0.25); }
+    .severity-badge.CRITICAL::before { background:#EF4444; box-shadow:0 0 6px #EF4444; }
+    .severity-badge.HIGH     { background:rgba(249,115,22,0.12); color:#F97316; border:1px solid rgba(249,115,22,0.25); }
+    .severity-badge.HIGH::before { background:#F97316; }
+    .severity-badge.MEDIUM   { background:rgba(234,179,8,0.1); color:#EAB308; border:1px solid rgba(234,179,8,0.2); }
+    .severity-badge.MEDIUM::before { background:#EAB308; }
+
+    .type-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-family: var(--mono);
+      background: var(--bg-card2);
+      color: var(--text-dim);
+      border: 1px solid var(--border-dim);
+      width: fit-content;
+    }
+    .type-badge.Ransomware   { color:#EF4444; border-color:rgba(239,68,68,0.2); background:rgba(239,68,68,0.06); }
+    .type-badge.Zero-Day     { color:#F97316; border-color:rgba(249,115,22,0.2); background:rgba(249,115,22,0.06); }
+    .type-badge.Nation-State { color:#A78BFA; border-color:rgba(167,139,250,0.2); background:rgba(139,92,246,0.06); }
+    .type-badge.Data-Breach  { color:#EAB308; border-color:rgba(234,179,8,0.2); background:rgba(234,179,8,0.06); }
+    .type-badge.AI-Attack    { color:#10B981; border-color:rgba(16,185,129,0.2); background:rgba(16,185,129,0.06); }
+    .type-badge.Supply-Chain { color:#8B5CF6; border-color:rgba(139,92,246,0.2); background:rgba(139,92,246,0.06); }
+    .type-badge.Compliance   { color:#94A3B8; border-color:rgba(148,163,184,0.2); background:rgba(100,116,139,0.06); }
+
+    .attack-status {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+    .attack-status.Active        { color:#EF4444; }
+    .attack-status.Contained     { color:#10B981; }
+    .attack-status.Patched       { color:#10B981; }
+    .attack-status.Investigating { color:#F97316; }
+
+    .attack-body { min-width: 0; }
+    .attack-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .attack-summary {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .attack-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .attack-tag {
+      font-size: 0.65rem;
+      font-family: var(--mono);
+      padding: 2px 7px;
+      border-radius: 3px;
+      background: var(--bg-surface);
+      color: var(--text-dim);
+      border: 1px solid var(--border-dim);
+    }
+    .attack-impact {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      background: var(--bg-surface);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      border-left: 2px solid var(--border);
+    }
+    .attack-impact strong { color: var(--text-muted); }
+
+    .attack-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 120px;
+    }
+    .ti-source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      color: var(--cyan);
+      transition: gap var(--transition);
+      white-space: nowrap;
+    }
+    .ti-source-link:hover { gap: 8px; }
+    .ti-source-link svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .ti-source-link + .ti-source-link { color: var(--text-dim); }
+    .ti-source-link + .ti-source-link:hover { color: var(--text-muted); }
+
+    /* Month dividers */
+    .month-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 32px 0 16px;
+    }
+    .month-divider h3 {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .month-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-dim);
+    }
+
+    /* No results */
+    .ti-no-results {
+      display: none;
+      text-align: center;
+      padding: 64px 0;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+    .ti-no-results.visible { display: block; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .attack-card {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .attack-meta { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px; }
+      .attack-actions { flex-direction: row; flex-wrap: wrap; }
+      .ti-stat { padding: 0 16px; }
+      .ti-stats-bar { padding: 16px; }
+    }
+    @media (max-width: 480px) {
+      .ti-stat + .ti-stat { border-left: none; border-top: 1px solid var(--border-dim); padding-top: 12px; }
+      .ti-stats-bar { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav-bar" id="top">
+    <div class="container nav-inner">
+      <a class="logo" href="index.html" aria-label="Techzick Home">
+        <svg class="logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="44" height="44" rx="10" fill="#0A1628"/>
+          <path d="M8 16h28M8 22h20M8 28h14" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="34" cy="28" r="6" fill="none" stroke="#7C3AED" stroke-width="2"/>
+          <circle cx="34" cy="28" r="2" fill="#00D4FF"/>
+        </svg>
+        <span class="logo-text">TECHZICK</span>
+      </a>
+      <nav class="nav-menu" aria-label="Main navigation">
+        <a href="index.html#products">Products</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#blog">Blog</a>
+        <a href="index.html#contact" class="nav-cta">Get Started</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="ti-hero">
+      <div class="container">
+        <div class="ti-nav">
+          <a href="index.html#blog" class="ti-back">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back to Blog
+          </a>
+          <span class="mono" style="color:var(--text-dim);font-size:0.72rem;">Maintained by AI Sentinel · Updated daily</span>
+        </div>
+        <div class="ti-hero-content">
+          <span class="eyebrow">AI SENTINEL — THREAT INTELLIGENCE</span>
+          <h1>Global Cyber Attack Tracker</h1>
+          <p>A rolling 6-month register of major ransomware campaigns, zero-day exploits, nation-state operations, data breaches, and AI security incidents — curated and analysed by AI Sentinel.</p>
+          <div class="ti-stats-bar">
+            <div class="ti-stat">
+              <span class="ti-stat-num red">16</span>
+              <span class="ti-stat-label">Total Incidents</span>
+            </div>
+            <div class="ti-stat">
+              <span class="ti-stat-num red">8</span>
+              <span class="ti-stat-label">CRITICAL Severity</span>
+            </div>
+            <div class="ti-stat">
+              <span class="ti-stat-num orange">3</span>
+              <span class="ti-stat-label">Active Campaigns</span>
+            </div>
+            <div class="ti-stat">
+              <span class="ti-stat-num cyan">4</span>
+              <span class="ti-stat-label">AI-Specific Attacks</span>
+            </div>
+            <div class="ti-stat">
+              <span class="ti-stat-num purple">6</span>
+              <span class="ti-stat-label">Countries Targeted</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRACKER -->
+    <section class="section" style="padding-top: 48px;">
+      <div class="container">
+
+        <!-- Filters -->
+        <div class="ti-filters">
+          <span class="ti-filter-label">Filter:</span>
+          <button class="ti-filter-btn active" data-type="All">All</button>
+          <button class="ti-filter-btn" data-type="Ransomware">Ransomware</button>
+          <button class="ti-filter-btn" data-type="Zero-Day">Zero-Day</button>
+          <button class="ti-filter-btn" data-type="Nation-State">Nation-State</button>
+          <button class="ti-filter-btn" data-type="Data Breach">Data Breach</button>
+          <button class="ti-filter-btn" data-type="AI/LLM Attack">AI/LLM Attack</button>
+          <button class="ti-filter-btn" data-type="Supply Chain">Supply Chain</button>
+          <button class="ti-filter-btn" data-type="Compliance">Compliance</button>
+        </div>
+
+        <div class="ti-no-results" id="noResults">No incidents match this filter.</div>
+
+        <div class="ti-grid" id="attackGrid">
+
+          <!-- ── APRIL 2026 ── -->
+          <div class="month-divider" data-month="April 2026">
+            <h3>April 2026</h3>
+            <div class="month-divider-line"></div>
+          </div>
+
+          <article class="attack-card" data-type="Ransomware" id="nightlock-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-04-02</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Ransomware">Ransomware</span>
+              <span class="attack-status Active">● Active</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">NightLock Ransomware — 47 Hospitals in 72 Hours</h2>
+              <p class="attack-summary">The NightLock ransomware group coordinated simultaneous attacks on 47 healthcare organisations across North America and Europe, leveraging stolen credentials from the January NationalID breach. Encrypted patient records system-wide, forced emergency diversions, and demanded a combined $50M ransom with threat of 3.8M patient record exposure.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">Healthcare</span>
+                <span class="attack-tag">USA</span>
+                <span class="attack-tag">Canada</span>
+                <span class="attack-tag">UK</span>
+                <span class="attack-tag">Germany</span>
+                <span class="attack-tag">$50M ransom</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> 47 hospitals, 3.8M patient records threatened, emergency diversions, FDA &amp; HHS emergency response activated</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.bleepingcomputer.com/ransomware/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                BleepingComputer
+              </a>
+              <a class="ti-source-link" href="https://www.hhs.gov/hipaa/for-professionals/breach-notification/index.html" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                HHS Breach Portal
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="Compliance" id="nist-csf-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-04-01</span>
+              <span class="severity-badge HIGH">HIGH</span>
+              <span class="type-badge Compliance">Compliance</span>
+              <span class="attack-status Contained">● Published</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">NIST CSF 2.1 Released — AI Risk Controls Now Mandatory</h2>
+              <p class="attack-summary">NIST officially released Cybersecurity Framework 2.1, introducing a new Governance function tier and expanded controls for AI/ML risk management. Organisations using AI in critical decisions must implement new risk assessment controls under GOVERN 2.0. Major compliance programme updates required across all enterprise sectors.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">NIST</span>
+                <span class="attack-tag">Compliance</span>
+                <span class="attack-tag">AI Risk</span>
+                <span class="attack-tag">SOC 2</span>
+                <span class="attack-tag">ISO 27001</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> All enterprises using AI in critical processes must update compliance programmes; federal contractors face new mandate</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                NIST Official
+              </a>
+              <a class="ti-source-link" href="https://www.cisa.gov/resources-tools/resources/nist-cybersecurity-framework" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                CISA Guidance
+              </a>
+            </div>
+          </article>
+
+          <!-- ── MARCH 2026 ── -->
+          <div class="month-divider" data-month="March 2026">
+            <h3>March 2026</h3>
+            <div class="month-divider-line"></div>
+          </div>
+
+          <article class="attack-card" data-type="Zero-Day" id="chrome-zerodday-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-03-21</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Zero-Day">Zero-Day</span>
+              <span class="attack-status Patched">● Patched</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">Critical Chrome Zero-Day — CVE-2026-1847 (V8 RCE)</h2>
+              <p class="attack-summary">A critical zero-day in Chrome's V8 JavaScript engine was actively exploited by state-sponsored actors targeting financial institutions globally. Remote code execution via malicious web pages required no user interaction beyond visiting a site. Google issued an emergency out-of-band patch within 48 hours.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">CVE-2026-1847</span>
+                <span class="attack-tag">CVSS 9.4</span>
+                <span class="attack-tag">Chrome</span>
+                <span class="attack-tag">V8</span>
+                <span class="attack-tag">Finance</span>
+                <span class="attack-tag">Government</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> Credential and session token theft at financial institutions; Google emergency patch — update to 124.0.6367.82+</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://nvd.nist.gov/vuln/search/results?query=CVE-2026" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                NVD / CVE
+              </a>
+              <a class="ti-source-link" href="https://thehackernews.com/search?q=chrome+zero-day" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                The Hacker News
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="AI/LLM Attack" id="copilot-echoleak-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-03-05</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge AI-Attack">AI/LLM Attack</span>
+              <span class="attack-status Patched">● Patched</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">Microsoft Copilot EchoLeak — Zero-Click Prompt Injection</h2>
+              <p class="attack-summary">A zero-click prompt injection vulnerability in Microsoft Copilot for M365 silently exfiltrated sensitive documents from OneDrive, SharePoint, and Teams via trusted Microsoft domains. No user action required — malicious content embedded in shared documents triggered automatic data exfiltration at scale.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">Prompt Injection</span>
+                <span class="attack-tag">Microsoft 365</span>
+                <span class="attack-tag">Zero-Click</span>
+                <span class="attack-tag">OneDrive</span>
+                <span class="attack-tag">Teams</span>
+                <span class="attack-tag">$200M+ impact</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> $200M+ estimated business impact Q1 2026; government agencies suspended M365 Copilot; SEC inquiry opened</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://msrc.microsoft.com/update-guide/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                MSRC Advisory
+              </a>
+              <a class="ti-source-link" href="https://www.wired.com/category/security/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Wired Security
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="Zero-Day" id="cve-2025-48757">
+            <div class="attack-meta">
+              <span class="attack-date">2026-03-12</span>
+              <span class="severity-badge HIGH">HIGH</span>
+              <span class="type-badge Zero-Day">Zero-Day</span>
+              <span class="attack-status Investigating">● Investigating</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">CVE-2025-48757 — 170+ AI-Generated Apps Missing Row-Level Security</h2>
+              <p class="attack-summary">AI-generated applications built via Lovable shipped without Row-Level Security enabled on Supabase backends. One exposed instance leaked 13,000 users' data. Password reset tokens were accessible to anonymous users, enabling full account takeovers across 170+ applications.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">CVE-2025-48757</span>
+                <span class="attack-tag">CVSS 8.9</span>
+                <span class="attack-tag">AI-Generated Code</span>
+                <span class="attack-tag">Supabase</span>
+                <span class="attack-tag">RLS</span>
+                <span class="attack-tag">13k users</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> 170+ apps affected; 13,000+ users' PII exposed; full account takeovers demonstrated; FTC investigation opened</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://nvd.nist.gov/vuln/search/results?query=CVE-2025-48757" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                NVD / CVE
+              </a>
+              <a class="ti-source-link" href="https://www.wired.com/category/security/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Wired Security
+              </a>
+            </div>
+          </article>
+
+          <!-- ── FEBRUARY 2026 ── -->
+          <div class="month-divider" data-month="February 2026">
+            <h3>February 2026</h3>
+            <div class="month-divider-line"></div>
+          </div>
+
+          <article class="attack-card" data-type="AI/LLM Attack" id="supabase-mcp-leak">
+            <div class="attack-meta">
+              <span class="attack-date">2026-02-10</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge AI-Attack">AI/LLM Attack</span>
+              <span class="attack-status Contained">● Contained</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">Supabase MCP Data Leak — Prompt Injection via AI Agent</h2>
+              <p class="attack-summary">A prompt injection attack via a support ticket tricked an AI agent (Cursor + MCP integration) into dumping an entire Supabase SQL database — including OAuth tokens and session credentials. The service_role key bypassed all row-level security controls, exposing the full database to the attacker.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">Prompt Injection</span>
+                <span class="attack-tag">MCP</span>
+                <span class="attack-tag">Supabase</span>
+                <span class="attack-tag">Cursor</span>
+                <span class="attack-tag">OAuth Tokens</span>
+                <span class="attack-tag">service_role</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> Full database dumped; OAuth tokens and session credentials exposed; service_role key exploited to bypass RLS</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://thehackernews.com/search?q=mcp+security" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                The Hacker News
+              </a>
+              <a class="ti-source-link" href="https://supabase.com/security" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Supabase Security
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="AI/LLM Attack" id="india-supabase-block">
+            <div class="attack-meta">
+              <span class="attack-date">2026-02-18</span>
+              <span class="severity-badge HIGH">HIGH</span>
+              <span class="type-badge Compliance">Compliance</span>
+              <span class="attack-status Active">● Ongoing</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">India Blocks Supabase — Section 69A IT Act Shutdown</h2>
+              <p class="attack-summary">The Indian government ordered ISPs to block Supabase under Section 69A of the IT Act. Production applications relying on Supabase broke overnight. Thousands of startups scrambled for workarounds. India — the 4th largest tech market — went dark in under 24 hours.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">India</span>
+                <span class="attack-tag">Section 69A</span>
+                <span class="attack-tag">Supabase</span>
+                <span class="attack-tag">Regulatory</span>
+                <span class="attack-tag">$100M+ impact</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> Thousands of production apps down in India; $100M+ estimated economic impact on SaaS ecosystem</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://techcrunch.com/tag/india/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                TechCrunch India
+              </a>
+              <a class="ti-source-link" href="https://economictimes.indiatimes.com/tech" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Economic Times
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="AI/LLM Attack" id="model-poisoning-finance">
+            <div class="attack-meta">
+              <span class="attack-date">2026-02-25</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge AI-Attack">AI/LLM Attack</span>
+              <span class="attack-status Investigating">● Investigating</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">AI Model Poisoning — Financial Sector LLM Compromise</h2>
+              <p class="attack-summary">Backdoored fine-tuned LLM models distributed via Hugging Face targeted financial institutions that adopted open-source models for fraud detection. Poisoned models introduced systematic blind spots for specific fraud patterns, allowing attackers to bypass AI-powered fraud systems undetected for months.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">Model Poisoning</span>
+                <span class="attack-tag">Hugging Face</span>
+                <span class="attack-tag">Finance</span>
+                <span class="attack-tag">Fraud Detection</span>
+                <span class="attack-tag">$180M fraud</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> At least 3 major banks deployed poisoned models; ~$180M in undetected fraud attributed to compromised AI systems</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://unit42.paloaltonetworks.com/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Unit 42 Research
+              </a>
+              <a class="ti-source-link" href="https://huggingface.co/blog/security" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Hugging Face Security
+              </a>
+            </div>
+          </article>
+
+          <!-- ── JANUARY 2026 ── -->
+          <div class="month-divider" data-month="January 2026">
+            <h3>January 2026</h3>
+            <div class="month-divider-line"></div>
+          </div>
+
+          <article class="attack-card" data-type="Nation-State" id="gridstrike-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-01-07</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Nation-State">Nation-State</span>
+              <span class="attack-status Contained">● Contained</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">GridStrike — Volt Typhoon Pre-Positions Inside US Power Grid</h2>
+              <p class="attack-summary">CISA and FBI confirmed Volt Typhoon (China-linked) successfully pre-positioned malware inside OT systems of 6 US regional power utilities. No disruption was triggered — assessed as pre-positioning for escalation during future geopolitical conflict. Emergency Congressional briefing convened in closed session.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">Volt Typhoon</span>
+                <span class="attack-tag">China-linked</span>
+                <span class="attack-tag">OT/ICS</span>
+                <span class="attack-tag">Energy Grid</span>
+                <span class="attack-tag">USA</span>
+                <span class="attack-tag">CISA AA26-007A</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> Classified scope; NERC CIP compliance review ordered for all grid operators; national security emergency declared</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.cisa.gov/news-events/alerts" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                CISA Advisory
+              </a>
+              <a class="ti-source-link" href="https://krebsonsecurity.com" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Krebs on Security
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="Data Breach" id="nationalid-breach-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-01-22</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Data-Breach">Data Breach</span>
+              <span class="attack-status Investigating">● Investigating</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">NationalID Breach — 2.1 Billion Records Leaked (Largest Ever)</h2>
+              <p class="attack-summary">The largest data breach in history: 2.1 billion records including Social Security Numbers, biometric hashes, passport data, and full financial history leaked from a major identity verification aggregator. Data appeared for sale on the RAMP darknet forum within 72 hours of exfiltration.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">2.1B records</span>
+                <span class="attack-tag">SSN</span>
+                <span class="attack-tag">Biometrics</span>
+                <span class="attack-tag">USA</span>
+                <span class="attack-tag">EU</span>
+                <span class="attack-tag">India</span>
+                <span class="attack-tag">RAMP Forum</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> 2.1B individuals globally; FTC emergency response; class action filings in 14 jurisdictions; identity theft surge</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://haveibeenpwned.com" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Have I Been Pwned
+              </a>
+              <a class="ti-source-link" href="https://krebsonsecurity.com" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Krebs on Security
+              </a>
+            </div>
+          </article>
+
+          <!-- ── DECEMBER 2025 ── -->
+          <div class="month-divider" data-month="December 2025">
+            <h3>December 2025</h3>
+            <div class="month-divider-line"></div>
+          </div>
+
+          <article class="attack-card" data-type="Zero-Day" id="exchange-zerodday-2025">
+            <div class="attack-meta">
+              <span class="attack-date">2025-12-04</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Zero-Day">Zero-Day</span>
+              <span class="attack-status Patched">● Patched</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">Microsoft Exchange Zero-Day — CVE-2025-49742 (SSRF + RCE)</h2>
+              <p class="attack-summary">A critical SSRF-to-RCE chain in Microsoft Exchange Server was exploited by multiple threat actors before the patch was available. Unauthenticated attackers could execute arbitrary code on Exchange servers. Estimated 35,000+ Exchange servers globally compromised before patching.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">CVE-2025-49742</span>
+                <span class="attack-tag">CVSS 9.1</span>
+                <span class="attack-tag">Exchange Server</span>
+                <span class="attack-tag">SSRF</span>
+                <span class="attack-tag">RCE</span>
+                <span class="attack-tag">35k servers</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> 35,000+ Exchange servers compromised globally; several government agencies breached; CISA Emergency Directive ED-25-08 issued</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://msrc.microsoft.com/update-guide/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                MSRC Advisory
+              </a>
+              <a class="ti-source-link" href="https://www.cisa.gov/news-events/directives" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                CISA Directive
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="Ransomware" id="skybridge-casino-2025">
+            <div class="attack-meta">
+              <span class="attack-date">2025-12-11</span>
+              <span class="severity-badge HIGH">HIGH</span>
+              <span class="type-badge Ransomware">Ransomware</span>
+              <span class="attack-status Contained">● Contained</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">SkyBridge Casino Group — LockBit 4.0 Ransomware Attack</h2>
+              <p class="attack-summary">LockBit 4.0 encrypted SkyBridge Casino Group's operations across 18 properties in 3 countries. Customer PII, financial records, and surveillance footage were threatened for public release. Operations were offline for 5 days including hotel check-in, gaming floors, and payment systems.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">LockBit 4.0</span>
+                <span class="attack-tag">Hospitality</span>
+                <span class="attack-tag">USA</span>
+                <span class="attack-tag">Macau</span>
+                <span class="attack-tag">Singapore</span>
+                <span class="attack-tag">$40M ransom</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> $40M ransom demand; 11M customer records exposed; 5-day operational outage across 18 properties</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.bleepingcomputer.com/ransomware/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                BleepingComputer
+              </a>
+              <a class="ti-source-link" href="https://www.wired.com/category/security/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Wired Security
+              </a>
+            </div>
+          </article>
+
+          <!-- ── NOVEMBER 2025 ── -->
+          <div class="month-divider" data-month="November 2025">
+            <h3>November 2025</h3>
+            <div class="month-divider-line"></div>
+          </div>
+
+          <article class="attack-card" data-type="Ransomware" id="medchain-ransomware-2025">
+            <div class="attack-meta">
+              <span class="attack-date">2025-11-03</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Ransomware">Ransomware</span>
+              <span class="attack-status Contained">● Contained</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">MedChain Ransomware — 230 Hospitals Encrypted, 12 Deaths Linked</h2>
+              <p class="attack-summary">Coordinated ransomware attack on MedChain Health Systems by VenomSec (BlackCat/ALPHV successor) encrypted patient records across 230 hospitals. Emergency care diversions were initiated system-wide. 12 patient deaths have been attributed to care disruptions. HHS launched a formal investigation.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">VenomSec</span>
+                <span class="attack-tag">Healthcare</span>
+                <span class="attack-tag">USA</span>
+                <span class="attack-tag">Canada</span>
+                <span class="attack-tag">UK</span>
+                <span class="attack-tag">$95M ransom</span>
+                <span class="attack-tag">4.2M records</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> 230 hospitals; $95M ransom demand; 4.2M patient records at risk; 12 deaths linked to care disruption; HHS investigation</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.hhs.gov/hipaa/for-professionals/breach-notification/index.html" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                HHS Breach Portal
+              </a>
+              <a class="ti-source-link" href="https://www.bleepingcomputer.com/ransomware/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                BleepingComputer
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="Supply Chain" id="npm-supply-chain-2025">
+            <div class="attack-meta">
+              <span class="attack-date">2025-11-19</span>
+              <span class="severity-badge HIGH">HIGH</span>
+              <span class="type-badge Supply-Chain">Supply Chain</span>
+              <span class="attack-status Patched">● Removed</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">npm Supply Chain Attack — "node-oauth2-proxy" Package Backdoor</h2>
+              <p class="attack-summary">Malicious versions of the widely-used npm package `node-oauth2-proxy` (versions 3.2.1–3.2.4) were published by a compromised maintainer account. The package contained a reverse shell payload that activated during CI/CD builds. Downloaded 180,000+ times before detection by Snyk researchers.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">npm</span>
+                <span class="attack-tag">Supply Chain</span>
+                <span class="attack-tag">Lazarus suspected</span>
+                <span class="attack-tag">CI/CD</span>
+                <span class="attack-tag">180k downloads</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> Thousands of CI/CD pipelines exposed; credential theft from build environments; tech and finance sectors primarily affected</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://security.snyk.io" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Snyk Research
+              </a>
+              <a class="ti-source-link" href="https://thehackernews.com/search?q=npm+supply+chain" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                The Hacker News
+              </a>
+            </div>
+          </article>
+
+          <!-- ── OCTOBER 2025 ── -->
+          <div class="month-divider" data-month="October 2025">
+            <h3>October 2025</h3>
+            <div class="month-divider-line"></div>
+          </div>
+
+          <article class="attack-card" data-type="Nation-State" id="salt-typhoon-2025">
+            <div class="attack-meta">
+              <span class="attack-date">2025-10-08</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Nation-State">Nation-State</span>
+              <span class="attack-status Investigating">● Ongoing</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">Salt Typhoon Telecom Espionage — 9 US Carriers Compromised</h2>
+              <p class="attack-summary">US intelligence confirmed Salt Typhoon (China-linked APT) compromised at least 9 major US telecommunications carriers, intercepting lawful wiretap infrastructure (CALEA) and collecting metadata on millions of calls including communications of senior government officials and political figures.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">Salt Typhoon</span>
+                <span class="attack-tag">China-linked</span>
+                <span class="attack-tag">Telecom</span>
+                <span class="attack-tag">CALEA</span>
+                <span class="attack-tag">AT&amp;T</span>
+                <span class="attack-tag">Verizon</span>
+                <span class="attack-tag">9 carriers</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> US CALEA wiretap infrastructure compromised; national security implications; Senate Intelligence Committee hearings convened</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.cisa.gov/news-events/alerts" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                CISA AA25-289A
+              </a>
+              <a class="ti-source-link" href="https://krebsonsecurity.com" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Krebs on Security
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="Zero-Day" id="fortinet-zerodday-2025">
+            <div class="attack-meta">
+              <span class="attack-date">2025-10-15</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Zero-Day">Zero-Day</span>
+              <span class="attack-status Patched">● Patched</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">Fortinet FortiOS SSL-VPN Zero-Day — CVE-2025-32756 (RCE)</h2>
+              <p class="attack-summary">A critical remote code execution vulnerability in Fortinet FortiOS SSL-VPN was exploited in the wild before the patch was available. Attackers deployed custom malware implants on compromised FortiGate devices, establishing persistent access. Thousands of government agencies and enterprises were affected globally.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">CVE-2025-32756</span>
+                <span class="attack-tag">CVSS 9.6</span>
+                <span class="attack-tag">Fortinet</span>
+                <span class="attack-tag">SSL-VPN</span>
+                <span class="attack-tag">FortiOS</span>
+                <span class="attack-tag">Government</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> Thousands of FortiGate devices compromised globally; government agencies affected; malware implants deployed on network perimeter devices</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.fortiguard.com/psirt" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Fortinet PSIRT
+              </a>
+              <a class="ti-source-link" href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                CISA KEV
+              </a>
+            </div>
+          </article>
+
+        </div><!-- end ti-grid -->
+
+        <!-- Subscribe CTA -->
+        <div style="text-align:center; padding: 64px 0 32px;">
+          <p class="section-sub" style="margin-bottom:24px;">Get this tracker delivered to your inbox every week — with mitigation guidance from AI Sentinel.</p>
+          <a href="index.html#contact" class="btn btn-primary">Subscribe to Weekly Threat Digest</a>
+          <a href="index.html#blog" class="btn btn-ghost" style="margin-left:12px;">Back to Blog</a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a class="logo" href="index.html" aria-label="Techzick Home">
+          <svg class="logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="44" height="44" rx="10" fill="#0A1628"/>
+            <path d="M8 16h28M8 22h20M8 28h14" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="34" cy="28" r="6" fill="none" stroke="#7C3AED" stroke-width="2"/>
+            <circle cx="34" cy="28" r="2" fill="#00D4FF"/>
+          </svg>
+          <span class="logo-text">TECHZICK</span>
+        </a>
+        <p>AI Sentinel — Global Cyber Attack Tracker<br />Rolling 6-month window · Updated daily</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Tracker</h5>
+          <a href="#nightlock-2026">NightLock Ransomware</a>
+          <a href="#copilot-echoleak-2026">EchoLeak</a>
+          <a href="#gridstrike-2026">GridStrike</a>
+          <a href="#nationalid-breach-2026">NationalID Breach</a>
+        </div>
+        <div class="footer-col">
+          <h5>By Type</h5>
+          <a href="#" onclick="filterByType('Ransomware')">Ransomware</a>
+          <a href="#" onclick="filterByType('Zero-Day')">Zero-Days</a>
+          <a href="#" onclick="filterByType('Nation-State')">Nation-State</a>
+          <a href="#" onclick="filterByType('AI/LLM Attack')">AI Attacks</a>
+        </div>
+        <div class="footer-col">
+          <h5>Sources</h5>
+          <a href="https://www.cisa.gov/news-events/alerts" target="_blank" rel="noopener">CISA Alerts</a>
+          <a href="https://nvd.nist.gov" target="_blank" rel="noopener">NVD / CVE</a>
+          <a href="https://www.bleepingcomputer.com" target="_blank" rel="noopener">BleepingComputer</a>
+          <a href="https://krebsonsecurity.com" target="_blank" rel="noopener">Krebs on Security</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p class="mono">&copy; 2026 Techzick. Threat data curated by AI Sentinel.</p>
+        <a href="index.html" class="mono">← Back to Techzick.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Filter logic
+    const filterBtns = document.querySelectorAll('.ti-filter-btn');
+    const cards = document.querySelectorAll('.attack-card');
+    const dividers = document.querySelectorAll('.month-divider');
+    const noResults = document.getElementById('noResults');
+
+    function filterByType(type) {
+      // update button states
+      filterBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.type === type || (type === 'All' && btn.dataset.type === 'All'));
+      });
+      applyFilter(type);
+      // scroll to grid
+      document.getElementById('attackGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function applyFilter(type) {
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cardType = card.dataset.type;
+        const show = type === 'All' || cardType === type;
+        card.classList.toggle('hidden', !show);
+        if (show) visibleCount++;
+      });
+
+      // hide/show month dividers based on whether any card in that month is visible
+      dividers.forEach(divider => {
+        let nextEl = divider.nextElementSibling;
+        let hasVisible = false;
+        while (nextEl && !nextEl.classList.contains('month-divider')) {
+          if (nextEl.classList.contains('attack-card') && !nextEl.classList.contains('hidden')) {
+            hasVisible = true;
+            break;
+          }
+          nextEl = nextEl.nextElementSibling;
+        }
+        divider.style.display = hasVisible ? '' : 'none';
+      });
+
+      noResults.classList.toggle('visible', visibleCount === 0);
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(btn.dataset.type);
+      });
+    });
+
+    // Hamburger (inherited from main site styles — no-op on this page, but keep parity)
+  </script>
+
+</body>
+</html>
