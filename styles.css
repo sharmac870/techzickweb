@@ -1019,6 +1019,64 @@ ul { list-style: none; }
   gap: 24px;
   margin-bottom: 48px;
 }
+
+/* ── Skeleton loading ── */
+@keyframes skelPulse {
+  0%, 100% { opacity: .45; }
+  50%       { opacity: .9; }
+}
+.skel-card { pointer-events: none; }
+.skel-line {
+  height: 14px;
+  border-radius: 4px;
+  background: var(--bg-card2);
+  animation: skelPulse 1.6s ease-in-out infinite;
+}
+.skel-tracker-msg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 0;
+}
+
+/* ── Live feed source badge ── */
+.feed-source-badge {
+  font-size: .58rem;
+  letter-spacing: .1em;
+  color: var(--cyan);
+  opacity: .8;
+  padding: 2px 6px;
+  border: 1px solid rgba(0,212,255,.2);
+  border-radius: 3px;
+}
+
+/* ── Live KEV section header ── */
+.live-feed-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 32px 0 20px;
+  flex-wrap: wrap;
+}
+.live-feed-header .live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: .65rem;
+  letter-spacing: .12em;
+  color: var(--cyan);
+  margin-bottom: 6px;
+}
+.live-feed-meta {
+  font-family: var(--mono);
+  font-size: .7rem;
+  color: var(--text-dim);
+  text-align: right;
+  line-height: 1.7;
+}
+.live-feed-meta span { color: var(--cyan); }
 .blog-card {
   background: var(--bg-card);
   border: 1px solid var(--border-dim);
@@ -1078,6 +1136,24 @@ ul { list-style: none; }
   background: var(--purple-dim);
   border-color: rgba(124,58,237,0.3);
 }
+.blog-category--orange {
+  color: #F97316;
+  background: rgba(249,115,22,0.08);
+  border-color: rgba(249,115,22,0.25);
+}
+.blog-category--cyan {
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  border-color: rgba(0,212,255,0.25);
+}
+.blog-tag--orange { border-color: rgba(249,115,22,0.25); color: #F97316; background: rgba(249,115,22,0.08); }
+.blog-tag--cyan   { border-color: rgba(0,212,255,0.2);   color: var(--cyan); background: var(--cyan-dim); }
+.card-link--orange { color: #F97316; }
+.card-link--orange:hover { color: #fb923c; }
+.card-link--cyan { color: var(--cyan); }
+.card-link--cyan:hover { color: #67e8f9; }
+.author-dot--orange { background: #F97316; }
+.author-dot--cyan   { background: var(--cyan); }
 .blog-date {
   font-size: 0.65rem;
   color: var(--text-dim);

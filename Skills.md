@@ -333,6 +333,34 @@ tags: [list of relevant tags]
 
 ---
 
+## How to Publish a New Threat to the Blog
+
+New threats are stored in **`threats.js`** as a JavaScript array. The blog section on `index.html` auto-renders the **4 most recent entries** (top of the array) — no HTML editing required.
+
+### Steps to add a new threat:
+
+1. Open `threats.js`
+2. Insert a new entry at the **top** of the `THREATS` array (index 0):
+
+```js
+{
+  id: 'unique-slug-YYYY',           // kebab-case, used for anchor links
+  date: 'YYYY-MM-DD',               // ISO date — controls sort order
+  title: 'Short descriptive title', // shown as card heading
+  type: 'Ransomware',               // controls card colour: Ransomware=purple, Zero-Day=orange, AI/LLM Attack=cyan, others=default
+  severity: 'CRITICAL',            // CRITICAL | HIGH | MEDIUM
+  excerpt: '2–3 sentence summary.', // shown in blog card body
+  tags: ['Tag1', 'Tag2', 'Tag3'],   // shown as tag pills on the card
+  anchor: 'unique-slug-YYYY',       // links to threat-intel.html#<anchor>
+},
+```
+
+3. Save — the homepage blog grid updates automatically. Threats dated within the last **30 days** automatically receive the **ACTIVE** badge.
+4. Add the full entry to the **6-Month Global Attack Register** below (in the correct month section).
+5. Add the corresponding detailed entry to **`threat-intel.html`** using the same anchor id.
+
+---
+
 ## Agent Instructions
 
 When generating content, AI Sentinel must:

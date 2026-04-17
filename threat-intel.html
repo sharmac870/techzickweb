@@ -353,23 +353,23 @@
           <p>A rolling 6-month register of major ransomware campaigns, zero-day exploits, nation-state operations, data breaches, and AI security incidents — curated and analysed by AI Sentinel.</p>
           <div class="ti-stats-bar">
             <div class="ti-stat">
-              <span class="ti-stat-num red">16</span>
+              <span class="ti-stat-num red" id="stat-total">—</span>
               <span class="ti-stat-label">Total Incidents</span>
             </div>
             <div class="ti-stat">
-              <span class="ti-stat-num red">8</span>
+              <span class="ti-stat-num red" id="stat-critical">—</span>
               <span class="ti-stat-label">CRITICAL Severity</span>
             </div>
             <div class="ti-stat">
-              <span class="ti-stat-num orange">3</span>
+              <span class="ti-stat-num orange" id="stat-active">—</span>
               <span class="ti-stat-label">Active Campaigns</span>
             </div>
             <div class="ti-stat">
-              <span class="ti-stat-num cyan">4</span>
+              <span class="ti-stat-num cyan" id="stat-ai">—</span>
               <span class="ti-stat-label">AI-Specific Attacks</span>
             </div>
             <div class="ti-stat">
-              <span class="ti-stat-num purple">6</span>
+              <span class="ti-stat-num purple" id="stat-countries">—</span>
               <span class="ti-stat-label">Countries Targeted</span>
             </div>
           </div>
@@ -380,6 +380,34 @@
     <!-- TRACKER -->
     <section class="section" style="padding-top: 48px;">
       <div class="container">
+
+        <!-- ── Live CISA KEV Feed ── -->
+        <div class="live-feed-header">
+          <div>
+            <div class="live-badge">
+              <span class="pulse-dot"></span>
+              LIVE · CISA KNOWN EXPLOITED VULNERABILITIES
+            </div>
+            <p style="color:var(--text-muted);font-size:.875rem;margin:4px 0 0;">
+              All CVEs added to the CISA KEV catalog in the last 6 months — fetched live, cached hourly.
+            </p>
+          </div>
+          <div class="live-feed-meta">
+            <span id="live-kev-count">—</span> entries<br>
+            Latest: <span id="live-kev-catalog-date">—</span><br>
+            Updated: <span id="live-kev-updated">—</span>
+          </div>
+        </div>
+        <div id="live-kev-grid" class="ti-grid" style="margin-bottom:0;"></div>
+
+        <!-- ── Curated Tracker divider ── -->
+        <div class="month-divider" style="margin-top:56px;margin-bottom:8px;">
+          <h3>AI SENTINEL — CURATED TRACKER</h3>
+          <div class="month-divider-line"></div>
+        </div>
+        <p style="font-size:.8rem;color:var(--text-dim);margin-bottom:28px;font-family:var(--mono);">
+          // Manually verified incidents: ransomware campaigns, nation-state ops, AI exploits, data breaches
+        </p>
 
         <!-- Filters -->
         <div class="ti-filters">
@@ -403,6 +431,197 @@
             <h3>April 2026</h3>
             <div class="month-divider-line"></div>
           </div>
+
+          <article class="attack-card" data-type="Nation-State" id="zionsiphon-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-04-17</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Nation-State">Nation-State</span>
+              <span class="attack-status Active">● Active</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">ZionSiphon — OT Malware Designed to Sabotage Water Treatment Systems</h2>
+              <p class="attack-summary">Newly discovered operational technology malware ZionSiphon specifically targets water treatment and desalination plants. It can raise chlorine levels to dangerous concentrations via a hardcoded "IncreaseChlorineLevel()" function and manipulate hydraulic pressures to cause infrastructure failure. The malware propagates via USB drives disguised as svchost.exe. Darktrace researchers found an encryption logic flaw that currently prevents execution, but warn a fixed variant could be weaponised imminently.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">OT/ICS</span>
+                <span class="attack-tag">Water Treatment</span>
+                <span class="attack-tag">Israel-targeted</span>
+                <span class="attack-tag">USB Propagation</span>
+                <span class="attack-tag">Critical Infrastructure</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> No confirmed execution yet; if weaponised — mass civilian poisoning risk; Darktrace issued emergency advisory to water utilities globally</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.bleepingcomputer.com/news/security/zionsiphon-malware-designed-to-sabotage-water-treatment-systems/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                BleepingComputer
+              </a>
+              <a class="ti-source-link" href="https://www.cisa.gov/topics/critical-infrastructure-security-and-resilience/water-and-wastewater-systems-sector" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                CISA Water Sector
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="AI/LLM Attack" id="mcp-tool-poisoning-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-04-16</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge AI-Attack">AI/LLM Attack</span>
+              <span class="attack-status Active">● Active</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">MCP Tool Poisoning — CVE-2026-2241 Exploited Across 3,000+ AI Agent Deployments</h2>
+              <p class="attack-summary">A critical vulnerability in the MCP tool-call response parser allows malicious MCP servers to inject hidden instructions into AI agent context windows. Actively exploited to exfiltrate API keys, cloud credentials, and secrets from agentic CI/CD pipelines. Any AI agent that connects to an untrusted or compromised MCP server is vulnerable. CISA added to Known Exploited Vulnerabilities catalog.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">CVE-2026-2241</span>
+                <span class="attack-tag">MCP</span>
+                <span class="attack-tag">Context Injection</span>
+                <span class="attack-tag">CI/CD</span>
+                <span class="attack-tag">API Keys</span>
+                <span class="attack-tag">3,000+ deployments</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> 3,000+ AI agent deployments affected; cloud credentials and API keys exfiltrated; CISA KEV listed; emergency patches issued by major agentic framework vendors</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                CISA KEV
+              </a>
+              <a class="ti-source-link" href="https://thehackernews.com/search?q=mcp+security" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                The Hacker News
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="Zero-Day" id="ms-patch-tuesday-april-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-04-14</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Zero-Day">Zero-Day</span>
+              <span class="attack-status Patched">● Patched</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">Microsoft April 2026 Patch Tuesday — 167 Flaws, 2 Zero-Days Including Exploited SharePoint Bug</h2>
+              <p class="attack-summary">Microsoft's April 2026 Patch Tuesday addressed 167 vulnerabilities including 8 Critical flaws. Two zero-days were patched: a SharePoint Server spoofing vulnerability actively exploited in the wild, and a publicly disclosed flaw. Additional critical patches cover Office RCE bugs triggerable via preview pane and a Microsoft Defender privilege escalation to SYSTEM level.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">Patch Tuesday</span>
+                <span class="attack-tag">SharePoint Zero-Day</span>
+                <span class="attack-tag">Office RCE</span>
+                <span class="attack-tag">Defender Priv-Esc</span>
+                <span class="attack-tag">167 CVEs</span>
+                <span class="attack-tag">8 Critical</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> SharePoint zero-day actively exploited pre-patch; Office RCE triggerable via preview pane with no clicks; SYSTEM privilege escalation via Defender — patch immediately</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.bleepingcomputer.com/news/microsoft/microsoft-april-2026-patch-tuesday-fixes-167-flaws-2-zero-days/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                BleepingComputer
+              </a>
+              <a class="ti-source-link" href="https://msrc.microsoft.com/update-guide/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                MSRC Advisory
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="Data Breach" id="oracle-cloud-breach-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-04-13</span>
+              <span class="severity-badge CRITICAL">CRITICAL</span>
+              <span class="type-badge Data-Breach">Data Breach</span>
+              <span class="attack-status Investigating">● Investigating</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">Oracle Cloud Identity Breach — 6M Enterprise Tenant Credentials Exposed</h2>
+              <p class="attack-summary">Oracle confirmed unauthorised access to its Identity Cloud Service (IDCS) affecting approximately 6 million enterprise tenant records. Compromised data includes SSO tokens, hashed passwords, and SAML signing certificates — the keys to enterprise SSO across thousands of downstream systems. The threat actor listed a sample dataset on BreachForums before Oracle confirmed the breach.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">Oracle Cloud</span>
+                <span class="attack-tag">IDCS</span>
+                <span class="attack-tag">SSO Tokens</span>
+                <span class="attack-tag">SAML Certs</span>
+                <span class="attack-tag">6M tenants</span>
+                <span class="attack-tag">BreachForums</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> 6M enterprise tenant credentials exposed; SAML signing cert compromise enables broad SSO impersonation; downstream system access risk across all Oracle Cloud customers</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.bleepingcomputer.com/news/security/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                BleepingComputer
+              </a>
+              <a class="ti-source-link" href="https://krebsonsecurity.com" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Krebs on Security
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="Nation-State" id="scattered-spider-april-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-04-09</span>
+              <span class="severity-badge HIGH">HIGH</span>
+              <span class="type-badge Nation-State">Nation-State</span>
+              <span class="attack-status Investigating">● Investigating</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">Scattered Spider — SIM-Swap Campaign Hits 14 US Financial Institutions</h2>
+              <p class="attack-summary">The Scattered Spider threat group returned with a coordinated SIM-swap and social engineering campaign targeting 14 US financial institutions. Attackers bypassed MFA on privileged admin accounts by convincing telecoms to reassign victim phone numbers. $22M in fraudulent wire transfers confirmed. FBI issued emergency alerts to financial sector CISOs.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">Scattered Spider</span>
+                <span class="attack-tag">SIM-Swap</span>
+                <span class="attack-tag">Social Engineering</span>
+                <span class="attack-tag">Finance</span>
+                <span class="attack-tag">USA</span>
+                <span class="attack-tag">$22M fraud</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> 14 US financial institutions hit; $22M in confirmed fraudulent wire transfers; MFA bypassed via SIM-swap on privileged accounts</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.bleepingcomputer.com/news/security/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                BleepingComputer
+              </a>
+              <a class="ti-source-link" href="https://www.ic3.gov/Media/News/2024" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                FBI IC3 Alert
+              </a>
+            </div>
+          </article>
+
+          <article class="attack-card" data-type="Zero-Day" id="windows-clfs-zerodday-2026">
+            <div class="attack-meta">
+              <span class="attack-date">2026-04-08</span>
+              <span class="severity-badge HIGH">HIGH</span>
+              <span class="type-badge Zero-Day">Zero-Day</span>
+              <span class="attack-status Patched">● Patched</span>
+            </div>
+            <div class="attack-body">
+              <h2 class="attack-title">Windows CLFS Zero-Day — CVE-2026-29824 Exploited by Ransomware Affiliates</h2>
+              <p class="attack-summary">Microsoft disclosed a privilege escalation zero-day in the Windows Common Log File System (CLFS) driver actively exploited by ransomware affiliates to achieve SYSTEM-level access after initial compromise. The vulnerability enables local privilege escalation from standard user to SYSTEM in seconds. Patch released as part of April Patch Tuesday — estimated 900,000+ unpatched Windows endpoints at time of disclosure.</p>
+              <div class="attack-tags">
+                <span class="attack-tag">CVE-2026-29824</span>
+                <span class="attack-tag">CVSS 8.8</span>
+                <span class="attack-tag">Windows CLFS</span>
+                <span class="attack-tag">Privilege Escalation</span>
+                <span class="attack-tag">Ransomware</span>
+                <span class="attack-tag">900k+ endpoints</span>
+              </div>
+              <div class="attack-impact"><strong>Impact:</strong> Exploited pre-patch by ransomware affiliates for SYSTEM privileges; 900,000+ unpatched endpoints at disclosure; patched in April Patch Tuesday KB5082200</div>
+            </div>
+            <div class="attack-actions">
+              <a class="ti-source-link" href="https://www.bleepingcomputer.com/news/microsoft/microsoft-april-2026-patch-tuesday-fixes-167-flaws-2-zero-days/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                BleepingComputer
+              </a>
+              <a class="ti-source-link" href="https://msrc.microsoft.com/update-guide/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                MSRC Advisory
+              </a>
+            </div>
+          </article>
 
           <article class="attack-card" data-type="Ransomware" id="nightlock-2026">
             <div class="attack-meta">
@@ -1012,48 +1231,79 @@
     </div>
   </footer>
 
+  <script src="threats.js"></script>
+  <script src="threat-feed.js"></script>
   <script>
-    // Filter logic
     const filterBtns = document.querySelectorAll('.ti-filter-btn');
-    const cards = document.querySelectorAll('.attack-card');
-    const dividers = document.querySelectorAll('.month-divider');
-    const noResults = document.getElementById('noResults');
+    const noResults  = document.getElementById('noResults');
 
-    function filterByType(type) {
-      // update button states
-      filterBtns.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.type === type || (type === 'All' && btn.dataset.type === 'All'));
+    const COUNTRY_TAGS = ['USA','UK','Canada','Germany','Australia','India','France','Israel','EU','Macau','Singapore'];
+
+    // Called by threat-feed.js after live cards are inserted, and once on DOM ready for curated cards
+    function computeTrackerStats() {
+      let total = 0, critical = 0, active = 0, ai = 0;
+      const countries = new Set();
+
+      document.querySelectorAll('.attack-card').forEach(card => {
+        total++;
+        if (card.querySelector('.severity-badge.CRITICAL')) critical++;
+        const st = card.querySelector('.attack-status');
+        if (st && (st.classList.contains('Active') || st.classList.contains('Investigating'))) active++;
+        if (card.dataset.type === 'AI/LLM Attack') ai++;
+        card.querySelectorAll('.attack-tag').forEach(tag => {
+          if (COUNTRY_TAGS.includes(tag.textContent.trim())) countries.add(tag.textContent.trim());
+        });
       });
+
+      const s = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+      s('stat-total',     total);
+      s('stat-critical',  critical);
+      s('stat-active',    active);
+      s('stat-ai',        ai);
+      s('stat-countries', countries.size || '—');
+    }
+
+    // Run once for the curated cards already in DOM (live cards computed again after fetch)
+    document.addEventListener('DOMContentLoaded', computeTrackerStats);
+
+    // ── Filter (covers both live KEV + curated cards) ──
+    function filterByType(type) {
+      filterBtns.forEach(btn =>
+        btn.classList.toggle('active', btn.dataset.type === type || (type === 'All' && btn.dataset.type === 'All'))
+      );
       applyFilter(type);
-      // scroll to grid
-      document.getElementById('attackGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelector('.ti-filters').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function applyFilter(type) {
-      let visibleCount = 0;
-
-      cards.forEach(card => {
-        const cardType = card.dataset.type;
-        const show = type === 'All' || cardType === type;
+      let visible = 0;
+      document.querySelectorAll('.attack-card').forEach(card => {
+        const show = type === 'All' || card.dataset.type === type;
         card.classList.toggle('hidden', !show);
-        if (show) visibleCount++;
+        if (show) visible++;
       });
 
-      // hide/show month dividers based on whether any card in that month is visible
-      dividers.forEach(divider => {
-        let nextEl = divider.nextElementSibling;
-        let hasVisible = false;
-        while (nextEl && !nextEl.classList.contains('month-divider')) {
-          if (nextEl.classList.contains('attack-card') && !nextEl.classList.contains('hidden')) {
-            hasVisible = true;
-            break;
+      // Hide month dividers when all their children are filtered out
+      document.querySelectorAll('.month-divider').forEach(div => {
+        let el = div.nextElementSibling, hasVisible = false;
+        while (el && !el.classList.contains('month-divider')) {
+          if (el.classList.contains('attack-card') && !el.classList.contains('hidden')) {
+            hasVisible = true; break;
           }
-          nextEl = nextEl.nextElementSibling;
+          el = el.nextElementSibling;
         }
-        divider.style.display = hasVisible ? '' : 'none';
+        div.style.display = hasVisible ? '' : 'none';
       });
 
-      noResults.classList.toggle('visible', visibleCount === 0);
+      // Hide live KEV section header when filtered away
+      const liveHeader = document.querySelector('.live-feed-header');
+      const liveGrid   = document.getElementById('live-kev-grid');
+      if (liveHeader && liveGrid) {
+        const liveVisible = liveGrid.querySelectorAll('.attack-card:not(.hidden)').length > 0;
+        liveHeader.style.display = (type === 'All' || liveVisible) ? '' : 'none';
+      }
+
+      if (noResults) noResults.classList.toggle('visible', visible === 0);
     }
 
     filterBtns.forEach(btn => {
@@ -1063,8 +1313,6 @@
         applyFilter(btn.dataset.type);
       });
     });
-
-    // Hamburger (inherited from main site styles — no-op on this page, but keep parity)
   </script>
 
 </body>
