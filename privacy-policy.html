@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Privacy Policy for CyberShield Security by Techzick." />
+  <title>Privacy Policy | CyberShield Security</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .policy-shell {
+      padding-top: var(--nav-h);
+      min-height: 100dvh;
+      background:
+        radial-gradient(circle at top left, rgba(0, 212, 255, 0.08), transparent 34%),
+        radial-gradient(circle at top right, rgba(124, 58, 237, 0.08), transparent 36%),
+        var(--bg);
+    }
+    .policy-hero {
+      padding: 48px 0 24px;
+      border-bottom: 1px solid var(--border-dim);
+      background: linear-gradient(180deg, rgba(10, 22, 40, 0.88), rgba(10, 22, 40, 0.35));
+    }
+    .policy-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      transition: color var(--transition);
+    }
+    .policy-back:hover { color: var(--cyan); }
+    .policy-back svg { width: 16px; height: 16px; }
+    .policy-hero h1 {
+      margin-bottom: 12px;
+      max-width: 10ch;
+    }
+    .policy-hero p {
+      max-width: 720px;
+      font-size: 1rem;
+    }
+    .policy-meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .policy-meta-card {
+      padding: 18px;
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius);
+      background: rgba(13, 30, 56, 0.72);
+    }
+    .policy-meta-card span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .policy-meta-card strong {
+      color: var(--text);
+      font-size: 0.95rem;
+      word-break: break-word;
+    }
+    .policy-main {
+      padding: 40px 0 96px;
+    }
+    .policy-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+    .policy-toc,
+    .policy-card,
+    .policy-note {
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius);
+      background: rgba(13, 30, 56, 0.76);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+    }
+    .policy-toc {
+      position: sticky;
+      top: calc(var(--nav-h) + 24px);
+      padding: 22px;
+    }
+    .policy-toc h2 {
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+    .policy-toc ul {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .policy-toc a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      transition: color var(--transition);
+    }
+    .policy-toc a:hover { color: var(--cyan); }
+    .policy-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .policy-card {
+      padding: 28px;
+    }
+    .policy-card h2 {
+      margin-bottom: 14px;
+      font-size: 1.35rem;
+    }
+    .policy-card p + p,
+    .policy-card ul,
+    .policy-card ol {
+      margin-top: 14px;
+    }
+    .policy-card li {
+      color: var(--text-muted);
+      margin-top: 10px;
+      padding-left: 18px;
+      position: relative;
+    }
+    .policy-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      box-shadow: 0 0 16px var(--cyan-glow);
+    }
+    .policy-card strong {
+      color: var(--text);
+    }
+    .policy-note {
+      padding: 24px 28px;
+      border-color: var(--border);
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(124, 58, 237, 0.08));
+    }
+    .policy-note h2 {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+    }
+    .policy-note li::before {
+      background: var(--cyan);
+    }
+    @media (max-width: 960px) {
+      .policy-meta,
+      .policy-layout {
+        grid-template-columns: 1fr;
+      }
+      .policy-toc {
+        position: static;
+      }
+    }
+    @media (max-width: 640px) {
+      .policy-hero,
+      .policy-main {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .policy-card,
+      .policy-note,
+      .policy-toc,
+      .policy-meta-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav-bar" id="top">
+    <div class="container nav-inner">
+      <a class="logo" href="index.html" aria-label="Techzick Home">
+        <svg class="logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="44" height="44" rx="10" fill="#0A1628"/>
+          <path d="M8 16h28M8 22h20M8 28h14" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="34" cy="28" r="6" fill="none" stroke="#7C3AED" stroke-width="2"/>
+          <circle cx="34" cy="28" r="2" fill="#00D4FF"/>
+        </svg>
+        <span class="logo-text">TECHZICK</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-menu" id="nav-menu" aria-label="Main navigation">
+        <a href="index.html#products">Products</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#capabilities">Capabilities</a>
+        <a href="threat-intel.html">Threat Intel</a>
+        <a href="index.html#contact" class="nav-cta">Get Started</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="policy-shell">
+    <section class="policy-hero">
+      <div class="container">
+        <a href="index.html" class="policy-back" aria-label="Back to Techzick home">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back to Techzick</span>
+        </a>
+        <span class="eyebrow">CyberShield Security</span>
+        <h1>Privacy Policy</h1>
+        <p>CyberShield Security is a browser extension designed to help users identify phishing risks, malicious URLs, suspicious downloads, scam content, unsafe prompts, and other security threats while browsing. This Privacy Policy explains what information the extension processes, how that information is used, and the choices available to users.</p>
+        <div class="policy-meta">
+          <div class="policy-meta-card">
+            <span>Effective date</span>
+            <strong>[DATE]</strong>
+          </div>
+          <div class="policy-meta-card">
+            <span>Publisher</span>
+            <strong>[YOUR NAME / COMPANY NAME]</strong>
+          </div>
+          <div class="policy-meta-card">
+            <span>Contact</span>
+            <strong>[SUPPORT EMAIL]</strong>
+          </div>
+          <div class="policy-meta-card">
+            <span>Website</span>
+            <strong>[YOUR WEBSITE OR SUPPORT PAGE]</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="policy-main">
+      <div class="container policy-layout">
+        <aside class="policy-toc" aria-label="Privacy policy sections">
+          <h2>Contents</h2>
+          <ul>
+            <li><a href="#information-we-process">1. Information We Process</a></li>
+            <li><a href="#how-we-use-information">2. How We Use Information</a></li>
+            <li><a href="#where-processing-happens">3. Where Processing Happens</a></li>
+            <li><a href="#data-sharing">4. Data Sharing</a></li>
+            <li><a href="#data-storage-and-retention">5. Data Storage and Retention</a></li>
+            <li><a href="#user-controls">6. User Controls</a></li>
+            <li><a href="#security">7. Security</a></li>
+            <li><a href="#children-privacy">8. Children's Privacy</a></li>
+            <li><a href="#international-users">9. International Users</a></li>
+            <li><a href="#changes-to-this-policy">10. Changes to This Privacy Policy</a></li>
+            <li><a href="#contact">11. Contact</a></li>
+            <li><a href="#chrome-web-store-disclosure-notes">Chrome Web Store Disclosure Notes</a></li>
+          </ul>
+        </aside>
+
+        <div class="policy-content">
+          <section class="policy-card" id="information-we-process">
+            <h2>1. Information We Process</h2>
+            <p>CyberShield Security may process the following categories of information in order to provide its security features:</p>
+            <ul>
+              <li><strong>Browsing and page data:</strong> The extension may inspect the current page URL, domain, page title, visible page text, search results, links, and other page-level content needed to evaluate site reputation, phishing risk, scam indicators, and content trust.</li>
+              <li><strong>User-provided text and prompt content:</strong> On supported AI websites and other monitored pages, the extension may analyze text entered by the user, pasted content, or visible prompt content in order to detect prompt injection attempts, accidental disclosure of secrets, or other security risks.</li>
+              <li><strong>Clipboard and input safety signals:</strong> When enabled by the extension’s protection features, the extension may inspect pasted text or typed input locally to detect exposed secrets, tokens, keys, or credentials. Where possible, sensitive values are masked before being sent outside the page context.</li>
+              <li><strong>URL and download metadata:</strong> The extension may process URLs, domains, filenames, and download source links to assess whether a page or file appears unsafe.</li>
+              <li><strong>Monitored email addresses:</strong> If a user chooses to enable breach monitoring and adds email addresses for monitoring, those email addresses may be processed to check whether they have appeared in known data breaches.</li>
+              <li><strong>Extension settings and preferences:</strong> The extension stores user preferences locally in the browser, such as enabled protections, safe domains, monitored email addresses, and other configuration settings.</li>
+              <li><strong>Device or local service connection details:</strong> If the user enables the optional local backend or local LLM features, the extension may communicate with a locally running service, such as http://127.0.0.1:8001 or http://localhost:8001, to perform analysis on the user’s own device or local network environment.</li>
+            </ul>
+          </section>
+
+          <section class="policy-card" id="how-we-use-information">
+            <h2>2. How We Use Information</h2>
+            <p>We use processed information only to provide the extension’s security features, including:</p>
+            <ul>
+              <li>Detecting phishing, scam, and malicious websites.</li>
+              <li>Evaluating links, domains, and page reputation.</li>
+              <li>Assessing download risk.</li>
+              <li>Detecting prompt injection and unsafe AI interactions.</li>
+              <li>Detecting accidental exposure of secrets or credentials.</li>
+              <li>Providing optional breach monitoring alerts.</li>
+              <li>Displaying security warnings, trust scores, and user-facing diagnostics.</li>
+              <li>Improving reliability and security of the extension.</li>
+            </ul>
+            <p>We do not use user data for advertising.</p>
+          </section>
+
+          <section class="policy-card" id="where-processing-happens">
+            <h2>3. Where Processing Happens</h2>
+            <p>CyberShield Security is designed to perform as much analysis as possible locally in the browser or through a local backend running on the user’s machine.</p>
+            <p>Depending on which features are enabled and available, data may be processed in the following ways:</p>
+            <ul>
+              <li><strong>In-browser local analysis:</strong> Some checks are performed entirely within the browser using built-in or bundled models and rules.</li>
+              <li><strong>Local backend analysis:</strong> If the user has installed and enabled the optional local backend, certain analysis requests may be sent to that local service on the user’s device.</li>
+              <li><strong>External threat intelligence lookups:</strong> For some threat checks, the extension may send URLs, domains, or related metadata to third-party threat intelligence services or to the configured backend so that those services can evaluate the resource.</li>
+            </ul>
+            <p>Based on the current extension behavior, external requests may include:</p>
+            <ul>
+              <li>URLhaus at https://urlhaus-api.abuse.ch/</li>
+              <li>Any analysis endpoints configured through the local or self-hosted backend.</li>
+              <li>Any third-party services used by that backend, if applicable.</li>
+            </ul>
+            <p>If you operate a hosted backend instead of only a local backend, you should name it here and disclose what data it receives.</p>
+          </section>
+
+          <section class="policy-card" id="data-sharing">
+            <h2>4. Data Sharing</h2>
+            <p>We do not sell personal information.</p>
+            <p>We may share limited data only as necessary to provide security checks, including:</p>
+            <ul>
+              <li>URLs or domains submitted for phishing or malware evaluation.</li>
+              <li>Email addresses submitted by the user for breach monitoring.</li>
+              <li>Limited text or page content submitted to the local or configured backend for security analysis.</li>
+              <li>Masked security-event data generated by secret exposure detection.</li>
+            </ul>
+            <p>We do not share user data with data brokers or advertisers.</p>
+          </section>
+
+          <section class="policy-card" id="data-storage-and-retention">
+            <h2>5. Data Storage and Retention</h2>
+            <p>CyberShield Security stores certain settings and user configuration data locally in the browser, such as:</p>
+            <ul>
+              <li>Protection settings.</li>
+              <li>Safe domain preferences.</li>
+              <li>Monitored email addresses.</li>
+              <li>Cached reputation or diagnostic data.</li>
+              <li>Other extension preferences.</li>
+            </ul>
+            <p>Retention depends on the user’s browser storage and configuration. Data remains until it expires, is overwritten, or is removed by the user or by uninstalling the extension.</p>
+            <p>If you run a backend service, add a short statement here describing:</p>
+            <ul>
+              <li>What server logs you keep.</li>
+              <li>How long they are retained.</li>
+              <li>Whether submitted URLs, prompts, or emails are stored.</li>
+            </ul>
+          </section>
+
+          <section class="policy-card" id="user-controls">
+            <h2>6. User Controls</h2>
+            <p>Users can control how the extension works by:</p>
+            <ul>
+              <li>Enabling or disabling features in the extension settings.</li>
+              <li>Adding or removing monitored email addresses.</li>
+              <li>Adding or removing safe domains or custom preferences.</li>
+              <li>Uninstalling the extension at any time.</li>
+              <li>Clearing browser extension storage through the browser.</li>
+            </ul>
+            <p>If a local backend is optional, users may also stop using that backend by turning off the feature or stopping the local service.</p>
+          </section>
+
+          <section class="policy-card" id="security">
+            <h2>7. Security</h2>
+            <p>We take reasonable steps to reduce unnecessary data collection and to favor local processing where possible. However, no method of transmission or storage is completely secure, and we cannot guarantee absolute security.</p>
+            <p>Users should avoid submitting highly sensitive information unless required for a specific security feature they intentionally enable.</p>
+          </section>
+
+          <section class="policy-card" id="children-privacy">
+            <h2>8. Children's Privacy</h2>
+            <p>CyberShield Security is not directed to children under 13, and we do not knowingly collect personal information from children.</p>
+          </section>
+
+          <section class="policy-card" id="international-users">
+            <h2>9. International Users</h2>
+            <p>If you use the extension outside your home country, your information may be processed in other jurisdictions depending on the services you use, including third-party threat intelligence services or any hosted backend you configure.</p>
+          </section>
+
+          <section class="policy-card" id="changes-to-this-policy">
+            <h2>10. Changes to This Privacy Policy</h2>
+            <p>We may update this Privacy Policy from time to time. If we make material changes, we will update the effective date above and publish the revised version through our website, support page, or Chrome Web Store listing.</p>
+          </section>
+
+          <section class="policy-card" id="contact">
+            <h2>11. Contact</h2>
+            <p>If you have questions about this Privacy Policy or the extension’s data practices, contact:</p>
+            <ul>
+              <li>[YOUR NAME / COMPANY NAME]</li>
+              <li>[SUPPORT EMAIL]</li>
+              <li>[WEBSITE / SUPPORT URL]</li>
+            </ul>
+          </section>
+
+          <section class="policy-note" id="chrome-web-store-disclosure-notes">
+            <h2>Chrome Web Store Disclosure Notes</h2>
+            <p>Based on the current code, your Chrome Web Store data disclosure will likely need to mention:</p>
+            <ul>
+              <li>Personally identifiable information: email addresses, if breach monitoring is enabled.</li>
+              <li>Web history / browsing activity: URLs and pages analyzed for security.</li>
+              <li>User activity or website content: page text, prompt text, or pasted text analyzed for protection features.</li>
+              <li>Files and docs: download metadata and scanned file-related information if download or file scanning is enabled.</li>
+            </ul>
+            <p>You should only claim:</p>
+            <ul>
+              <li>Data is used for security functionality.</li>
+              <li>Data is not sold.</li>
+              <li>Data is not used for advertising.</li>
+              <li>Data handling depends on enabled features and local or backend configuration.</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a class="logo" href="index.html" aria-label="Techzick Home">
+          <svg class="logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="44" height="44" rx="10" fill="#0A1628"/>
+            <path d="M8 16h28M8 22h20M8 28h14" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="34" cy="28" r="6" fill="none" stroke="#7C3AED" stroke-width="2"/>
+            <circle cx="34" cy="28" r="2" fill="#00D4FF"/>
+          </svg>
+          <span class="logo-text">TECHZICK</span>
+        </a>
+        <p>CyberShield Security privacy and data handling disclosure for browser-extension users.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Policy</h5>
+          <a href="#information-we-process">Information We Process</a>
+          <a href="#where-processing-happens">Where Processing Happens</a>
+          <a href="#data-sharing">Data Sharing</a>
+          <a href="#user-controls">User Controls</a>
+        </div>
+        <div class="footer-col">
+          <h5>Techzick</h5>
+          <a href="index.html#products">Products</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#contact">Contact</a>
+          <a href="threat-intel.html">Threat Intel</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <span id="year"></span> Techzick. All rights reserved.</p>
+        <p class="mono footer-tag">// cybershield privacy disclosure</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
